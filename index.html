@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreePOS - Core Terminal</title>
+    
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+    <div id="loadingScreen">
+        <div class="logo" style="font-size: 4rem">Booting...</div>
+        <br>
+        <p style="font-size: 0.8rem">If this is taking longer than usual, please check your internet connection.</p>
+        <p style="font-size: 0.8rem">While FreePOS can run offline, you will need to connect to the internet to intialize the POS first.</p>
+    </div>
+
+    <div id="authScreen" style="display: none;">
+        <div class="lp-nav">
+             <div class="logo" style="font-size: 2rem;">FreePOS</div>
+             <div style="display: flex; gap: 10px;">
+                 <!-- Add the new Support button here -->
+                 <button class="btn" style="background: #ffdfba;" onclick="window.location.href='./support.html'">Support & Setup</button>
+                 <button class="btn" style="background: #bae1ff;" onclick="document.getElementById('emailInput').focus()">Terminal Access</button>
+             </div>
+        </div>
+        <div class="lp-hero" style="background: var(--panel); flex-direction: column; gap: 20px; padding: 40px;">
+            <div class="lp-hero-text">
+                <div class="lp-badge">100% Free Core Tier</div>
+                <h1>The Hardware-Free Retail Terminal</h1>
+                <ul style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">
+                    <li><strong>Start taking sales in seconds.</strong></li>
+                    <li><strong>Perfect for pop-ups, thrift stores, and markets.</strong></li>
+                    <li><strong>Log in from any mobile device. No special hardware required.</strong></li>
+                    <li><strong>25 Free Inventory Slots</strong></li>
+                    <li><strong>Printer Ready</strong></li>
+                    <li><strong>Store Credit & Gift Card Logic</strong></li>
+                    <li><strong>Cloud-Backed Ledger History</strong></li>
+                </ul>
+            </div>
+            <div class="lp-hero-img-container" style="max-height: 300px; text-align: center;">
+                <div class="lp-hero-img-header">FreePOS_Terminal.exe</div>
+                <img src="assets/screenshot-1.png" alt="FreePOS Terminal Interface" class="lp-hero-img">
+            </div>
+      </div>
+      
+      <div class="lp-hero">
+            <div class="auth-box">
+                <h2 style="margin-bottom: 5px;">Terminal Login</h2>
+                <p style="margin-top: 0; font-size: 0.9rem; color: #666;">Enter your credentials to boot POS.</p>
+                <input type="email" class="auth-input" placeholder="Email" id="emailInput">
+                <input type="password" class="auth-input" placeholder="Password" id="passwordInput">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" style="flex: 1; background: #ddd;" id="btnLogin">Log In</button>
+                    <button class="btn" style="flex: 1; background: #baffc9;" id="btnSignup">Sign Up</button>
+                </div>
+                <div style="margin: 10px 0; border-bottom: 2px dashed #ccc; position: relative;">
+                    <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--panel); padding: 0 10px; font-size: 0.9rem; color: #666;">OR</span>
+                </div>
+                <button class="btn" style="background: #bae1ff; width: 100%;" id="btnGoogleAuth">Sign in with Google</button>
+            </div>
+        </div>
+
+        <div class="lp-section" style="background: var(--bg);">
+            <h2>Scale Only When You Need To</h2>
+            <div id="lpAddonsGrid" class="lp-grid"></div>
+        </div>
+
+        <div class="lp-section" style="background: var(--panel);">
+            <h2>Official Hardware & Supplies (Coming Soon)</h2>
+            <div id="lpSuppliesGrid" class="lp-grid"></div>
+        </div>
+
+        <div class="lp-hero">
+            <div class="lp-img-container">
+                <div class="lp-img-header">Inventory_Manager.exe</div>
+                <img src="assets/screenshot-2.png" alt="FreePOS Terminal Interface" class="lp-hero-img">
+            </div>
+            <div class="lp-img-container">
+                <div class="lp-img-header">Transactions.exe</div>
+                <img src="assets/screenshot-3.png" alt="FreePOS Terminal Interface" class="lp-hero-img">
+            </div>  
+            <div class="lp-img-container">
+                <div class="lp-img-header">Terminal_Settings.exe</div>    
+                <img src="assets/screenshot-4.png" alt="FreePOS Terminal Interface" class="lp-hero-img">
+            </div>
+        </div>
+        
+        <div style="padding: 40px; text-align: center; background: var(--header-bg); position: relative; border-top: 4px solid var(--border);">
+            <a href="disco.html">
+                <img src="./assets/danceParty.png" alt="Footer Dance Party Badge" class="footer-badge-1">
+            </a>
+
+            <div class="logo" style="font-size: 2.5rem; margin-bottom: 15px;">
+                <a href="./index.html" style="text-decoration: none; color: inherit;">FreePOS</a>
+            </div>
+            <p style="font-size: 1rem; font-weight: bold; margin-bottom: 20px;">Built for makers, thrifters, and hustlers.</p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px;">
+                <a href="admin.html" class="btn" style="background: #fff; text-decoration: none;">Staff Portal</a>
+                <a href="legal.html" class="btn" style="background: #e6e6fa; text-decoration: none;">Legal & Policies</a>
+                <a href="https://justindavis882.github.io/OllyDavisPortfolio" class="btn" style="background: #baffc9; text-decoration: none;" target="_blank">Developer Portfolio</a>
+            </div>
+            
+            <p style="font-size: 0.8rem; color: #666; margin-top: 20px;">© 2026 Built by Olly Davis.</p>
+            
+            <img src="./assets/madeWithLovePride.png" alt="Footer Made with Love & Pride Badge" class="footer-badge-2">
+        </div>
+    </div>
+
+    <div id="appContainer">
+        <header id="mainHeader">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div class="logo">FreePOS</div>
+                <div id="activeStaffDisplay" style="font-weight: bold; background: var(--bg); padding: 5px 10px; border: 2px solid var(--border); display: none;">Cashier: Owner</div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" id="openKioskBtn" style="display: none; background: #ffffba;">Kiosk</button>
+                <button class="btn" id="openProductsBtn">Products</button>
+                <button class="btn" id="openTxnsBtn">Txns</button>
+                <button class="btn" id="openSettingsBtn">⚙️</button>
+                <button class="btn" id="btnLogout" style="background: #ffb3ba;">Sys Out</button>
+                <button class="btn" id="btnLockTerminal" style="display: none; background: #ffb3ba;">Lock</button>
+            </div>
+        </header>
+
+        <div id="pinScreen">
+            <h2 style="font-size: 2rem; margin-bottom: 10px;">Terminal Locked</h2>
+            <p style="margin-bottom: 20px; color: #555;">Enter 4-Digit Staff PIN</p>
+            
+            <input type="password" id="pinInput" class="auth-input" style="width: 250px; text-align: center; font-size: 2.5rem; letter-spacing: 15px; margin-bottom: 20px;" readonly>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; width: 250px;">
+                <button class="btn pin-btn" onclick="addPinDigit(1)">1</button>
+                <button class="btn pin-btn" onclick="addPinDigit(2)">2</button>
+                <button class="btn pin-btn" onclick="addPinDigit(3)">3</button>
+                <button class="btn pin-btn" onclick="addPinDigit(4)">4</button>
+                <button class="btn pin-btn" onclick="addPinDigit(5)">5</button>
+                <button class="btn pin-btn" onclick="addPinDigit(6)">6</button>
+                <button class="btn pin-btn" onclick="addPinDigit(7)">7</button>
+                <button class="btn pin-btn" onclick="addPinDigit(8)">8</button>
+                <button class="btn pin-btn" onclick="addPinDigit(9)">9</button>
+                <button class="btn pin-btn" style="background: #ffb3ba;" onclick="clearPin()">CLR</button>
+                <button class="btn pin-btn" onclick="addPinDigit(0)">0</button>
+                <button class="btn pin-btn" style="background: #ddd; font-size: 1rem;" id="btnSysLogoutPin">Out</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; width: 250px;">
+                <button class="btn" style="background: #a8ebd1; padding: 15px; font-size: 1.2rem;" id="btnPinUnlock">Unlock Register</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" style="background: #bae1ff; flex: 1;" id="btnPinClockIn">Clock IN</button>
+                    <button class="btn" style="background: #ffdfba; flex: 1;" id="btnPinClockOut">Clock OUT</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-workspace" id="mainWorkspace">
+            <div class="grid-section" id="productGrid"></div>
+            <div class="cart-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h2 style="margin: 0;">Ticket</h2>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="btn" style="background: #ffffba; padding: 5px 10px; font-size: 0.9rem;" id="openQuickRingBtn">+ Quick Ring</button>
+                        <button class="btn" style="background: #bae1ff; padding: 5px 10px; font-size: 0.9rem; display: none;" id="openSellGcBtn">+ Sell GC</button>
+                        <button class="btn" style="background: #e6e6fa; padding: 5px 10px; font-size: 0.9rem; display: none;" id="openOrderTagBtn">🏷️ Tag</button>
+                    </div>
+                </div>
+                <div id="orderTagDisplay" style="font-weight: bold; color: var(--accent); margin-bottom: 10px; padding: 5px; border: 2px dashed var(--accent); display: none; text-align: center; text-transform: uppercase;"></div>
+                <div class="cart-items" id="cartList"></div>
+                
+                <div style="display: flex; justify-content: space-between; font-size: 1rem; color: #555;">
+                    <span>Subtotal:</span><span id="subtotalDisplay">$0.00</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 1rem; color: #555; margin-bottom: 10px;">
+                    <span>Tax (<span id="taxRateDisplay">0</span>%):</span><span id="taxDisplay">$0.00</span>
+                </div>
+                <div style="font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; display: flex; justify-content: space-between; border-top: 2px solid var(--border); padding-top: 10px;">
+                    <span>Total:</span><span id="totalDisplay">$0.00</span>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" style="background: #ffb3ba; font-size: 1.2rem; padding: 15px; flex: 1;" id="voidBtn">Void</button>
+                    <button class="btn" style="background: #4ade80; font-size: 1.2rem; padding: 15px; flex: 2;" id="chargeBtn">Charge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="productsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Inventory Management</h2>
+                <button class="btn" onclick="document.getElementById('productsModal').style.display='none'">X</button>
+            </div>
+            <div class="crud-list" id="crudProductList"></div>
+            <h3>Add / Edit Product (<span id="itemCountDisplay">0</span>)</h3>
+            <input type="hidden" id="editProdId">
+            <input type="text" class="auth-input" id="newProdName" placeholder="Item Name">
+            <input type="number" class="auth-input" id="newProdPrice" placeholder="Price">
+            <select class="auth-input" id="newProdColor">
+                <option value="#ffb3ba">Pink</option>
+                <option value="#ffdfba">Orange</option>
+                <option value="#ffffba">Yellow</option>
+                <option value="#baffc9">Green</option>
+                <option value="#bae1ff">Blue</option>
+            </select>
+            <input type="text" class="auth-input" id="newProdModifiers" placeholder="Options (e.g., Small, Large:+2.00)" style="display: none; margin-top: 10px;">
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="btn" style="background: #baffc9; flex: 1;" id="btnSaveProduct">Save</button>
+                <button class="btn" style="background: #ddd; display: none;" id="btnCancelEdit">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modifierModal">
+        <div class="modal" style="width: 400px; text-align: center;">
+            <div class="modal-header">
+                <h2 id="modModalTitle">Select Option</h2>
+                <button class="btn" onclick="document.getElementById('modifierModal').style.display='none'">X</button>
+            </div>
+            <div id="modList" style="display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto;"></div>
+            <button class="btn" style="background: #ddd; margin-top: 10px;" onclick="addBaseItem()">No Option (Base Item)</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Terminal Settings</h2>
+                <button class="btn" onclick="document.getElementById('settingsModal').style.display='none'">X</button>
+            </div>
+            <label>Store Name:</label>
+            <input type="text" class="auth-input" id="cfgStoreName" placeholder="Federation Thrift">
+            <label>Receipt Header Message:</label>
+            <input type="text" class="auth-input" id="cfgReceiptHeader" placeholder="Thank you for shopping local!">
+            <label>Sales Tax Rate (%):</label>
+            <input type="number" class="auth-input" id="cfgSalesTax" placeholder="e.g. 8.25" step="0.001">
+            <button class="btn" style="background: #4ade80;" id="btnSaveSettings">Save Configuration</button>
+            
+            <div style="border-top: 2px dashed var(--border); margin-top: 15px; padding-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn" style="background: #baffc9; width: 100%; font-size: 1.2rem; display: none;" id="btnInstallPwa">⬇️ Install App to Device</button>
+                <button class="btn" style="background: #e6e6fa; width: 100%; font-size: 1.2rem; display: none;" id="openStaffBtn">👥 Manage Staff</button>
+                <button class="btn" style="background: #fdfd96; width: 100%; font-size: 1.2rem; display: none;" id="openTimecardsBtn">⏱️ Timecards</button>
+                <button class="btn" style="background: #a8ebd1; width: 100%; font-size: 1.2rem;" id="btnConnectStripe">🔗 Connect Bank via Stripe</button>
+                <button class="btn" style="background: #bae1ff; width: 100%; font-size: 1.2rem;" id="openAddOnsBtn">✨ Manage Add-Ons</button>
+                <button class="btn" style="background: #ffdfba; width: 100%; font-size: 1.2rem;" id="openSuppliesBtn">📦 Order Supplies</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="staffModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Staff Management</h2>
+                <button class="btn" onclick="document.getElementById('staffModal').style.display='none'">X</button>
+            </div>
+            <div class="crud-list" id="staffListContainer"></div>
+            <h3>Add Staff Member</h3>
+            <input type="text" class="auth-input" id="newStaffName" placeholder="Employee Name">
+            <input type="password" class="auth-input" id="newStaffPin" placeholder="4-Digit PIN (e.g. 1234)" maxlength="4">
+            <button class="btn" style="background: #baffc9;" id="btnSaveStaff">Save Employee</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="timecardsModal">
+        <div class="modal" style="width: 600px;">
+            <div class="modal-header">
+                <h2>Timecard Ledger</h2>
+                <button class="btn" onclick="document.getElementById('timecardsModal').style.display='none'">X</button>
+            </div>
+            <div id="timecardsListContainer" style="max-height: 350px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="addOnsModal">
+        <div class="modal" style="width: 500px;">
+            <div class="modal-header">
+                <h2>Premium Add-Ons</h2>
+                <button class="btn" onclick="document.getElementById('addOnsModal').style.display='none'">X</button>
+            </div>
+            <p style="margin: 0 0 10px 0; font-size: 0.9rem;">Select modules to scale your terminal. Billed monthly via Stripe.</p>
+            <div id="addOnsList" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
+            <div style="font-size: 1.5rem; font-weight: bold; display: flex; justify-content: space-between; border-top: 2px solid var(--border); padding-top: 10px;">
+                <span>Monthly Total:</span><span id="monthlyTotalDisplay">$0.00/mo</span>
+            </div>
+            <button class="btn" style="background: #a8ebd1; font-size: 1.2rem; padding: 15px; margin-top: 10px;" id="btnCheckoutStripe">Subscribe via Stripe</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="suppliesModal">
+        <div class="modal" style="width: 500px;">
+            <div class="modal-header">
+                <h2>Order Supplies</h2>
+                <button class="btn" onclick="document.getElementById('suppliesModal').style.display='none'">X</button>
+            </div>
+            <div id="suppliesList" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; max-height: 250px; overflow-y: auto;"></div>
+            <div style="font-size: 1.5rem; font-weight: bold; display: flex; justify-content: space-between; border-top: 2px solid var(--border); padding-top: 10px;">
+                <span>Total:</span><span id="suppliesTotalDisplay">$0.00</span>
+            </div>
+            <button class="btn" style="background: #a8ebd1; font-size: 1.2rem; padding: 15px; margin-top: 10px;" id="btnCheckoutSupplies">Checkout via Stripe</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="onboardingModal" style="z-index: 9999; background: rgba(0,0,0,0.95);">
+        <div class="modal" style="text-align: center; border-color: var(--accent); box-shadow: 12px 12px 0px var(--accent);">
+            <h1 style="margin-bottom: 10px;">👋 Welcome to FreePOS!</h1>
+            <p style="margin-bottom: 20px;">Let's get your terminal set up. Please provide your profile details so we can support your account.</p>
+            
+            <input type="text" id="onboardName" class="auth-input" placeholder="Your Full Name (Required)" required style="margin-bottom: 10px;">
+            <input type="text" id="onboardStoreName" class="auth-input" placeholder="Your Store / Pop-up Name (Required)" required style="margin-bottom: 10px;">
+            <input type="tel" id="onboardPhone" class="auth-input" placeholder="Phone Number (Optional)" style="margin-bottom: 20px;">
+            
+            <button class="btn" style="background: var(--accent); width: 100%; font-size: 1.2rem; padding: 15px;" id="btnCompleteOnboarding">Boot Terminal</button>
+        </div>
+    </div>
+
+    <div id="lockoutScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;">
+        <div class="modal" style="color: var(--text); background: #ffb3ba;">
+            <h1 style="margin-bottom: 10px;">⚠️ ACCOUNT LOCKED</h1>
+            <p>Your latest monthly payment failed. The terminal premium features are frozen.</p>
+            <p>Please update your billing info or demote back to the free tier to unlock.</p>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                <button class="btn" style="background: #a8ebd1; padding: 15px;" id="btnPayBalance">Update Billing (Pay Balance)</button>
+                <button class="btn" style="background: #fff; padding: 15px;" id="btnDemoteToFree">Demote to Free Tier</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="quickRingModal">
+        <div class="modal" style="width: 350px;">
+            <div class="modal-header">
+                <h2>Quick Ring</h2>
+                <button class="btn" onclick="document.getElementById('quickRingModal').style.display='none'">X</button>
+            </div>
+            <input type="text" class="auth-input" id="quickRingName" placeholder="Item Name (Optional)" style="margin-bottom: 10px;">
+            <input type="number" class="auth-input" id="quickRingPrice" placeholder="Price (e.g. 5.00)" style="margin-bottom: 10px;" step="0.01">
+            <button class="btn" style="background: #ffffba;" id="btnQuickRingAdd">Add to Ticket</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="sellGiftCardModal">
+        <div class="modal" style="width: 350px;">
+            <div class="modal-header">
+                <h2>Activate Gift Card</h2>
+                <button class="btn" onclick="document.getElementById('sellGiftCardModal').style.display='none'">X</button>
+            </div>
+            <input type="number" class="auth-input" id="gcLoadAmount" placeholder="Amount to Load (e.g. 25.00)" style="margin-bottom: 10px;" step="0.01">
+            <input type="text" class="auth-input" id="gcScanUid" placeholder="Scan or Type Blank Card UID" style="margin-bottom: 10px;">
+            <button class="btn" style="background: #bae1ff;" id="btnActivateGiftCard">Add to Ticket</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orderTagModal">
+        <div class="modal" style="width: 350px; text-align: center;">
+            <div class="modal-header">
+                <h2>Tag Order</h2>
+                <button class="btn" onclick="document.getElementById('orderTagModal').style.display='none'">X</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button class="btn" style="background: #bae1ff; flex: 1; padding: 15px;" onclick="applyOrderTag('For Here')">For Here</button>
+                <button class="btn" style="background: #ffdfba; flex: 1; padding: 15px;" onclick="applyOrderTag('To-Go')">To-Go</button>
+            </div>
+            <p style="margin: 0 0 10px 0; font-size: 0.9rem;">Or enter a Table Number / Custom Name:</p>
+            <input type="text" class="auth-input" id="customOrderTagInput" placeholder="e.g. Table 4" style="margin-bottom: 10px;">
+            <button class="btn" style="background: #baffc9; margin-bottom: 10px;" onclick="applyOrderTag(document.getElementById('customOrderTagInput').value)">Set Custom Tag</button>
+            <button class="btn" style="background: #ffb3ba;" onclick="applyOrderTag(null)">Clear Tag</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal" style="text-align: center; width: 400px;">
+            <h2 id="checkoutModalTitle">Payment Method</h2>
+            
+            <div id="checkoutOptionsPanel">
+                <button class="btn" style="background: #a8ebd1; padding: 15px; margin-bottom: 10px; width: 100%;" id="btnPayCash">Cash</button>
+                <button class="btn" style="background: #a8cbf3; padding: 15px; margin-bottom: 10px; width: 100%;" id="btnPayCardInit">Credit / Debit (0.75% Fee)</button>
+                <button class="btn" style="background: #ffdfba; padding: 15px; margin-bottom: 10px; width: 100%;" id="btnPayGiftCard">Gift Card / Store Credit</button>
+                <button class="btn" style="background: #ddd; padding: 15px; width: 100%;" onclick="document.getElementById('checkoutModal').style.display='none'">Cancel</button>
+            </div>
+
+            <div id="stripeElementsPanel" style="display: none; text-align: left;">
+                <div style="background: var(--bg); border: 2px solid var(--border); padding: 15px; margin-bottom: 15px;">
+                    <div id="card-element"></div>
+                    <div id="card-errors" role="alert" style="color: var(--accent); margin-top: 10px; font-size: 0.85rem; font-weight: bold;"></div>
+                </div>
+                <button class="btn" style="background: #a8cbf3; padding: 15px; width: 100%; margin-bottom: 10px;" id="btnSubmitStripePayment">Charge Card</button>
+                <button class="btn" style="background: #ddd; padding: 15px; width: 100%;" id="btnCancelStripe">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="cashTenderModal">
+        <div class="modal" style="text-align: center; width: 350px;">
+            <div class="modal-header">
+                <h2>Cash Drawer</h2>
+                <button class="btn" onclick="document.getElementById('cashTenderModal').style.display='none'">X</button>
+            </div>
+            <h1 style="margin: 10px 0; font-size: 2rem;" id="cashTotalDueDisplay">$0.00</h1>
+            <input type="number" class="auth-input" id="cashTendered" placeholder="Amount Given (e.g. 20.00)" step="0.01" style="font-size: 1.5rem; text-align: center; margin-bottom: 15px;">
+            <div style="font-size: 1.5rem; margin-bottom: 20px; color: #ff4747; font-weight: bold;">
+                <span>Change: </span><span id="cashChangeDisplay">$0.00</span>
+            </div>
+            <button class="btn" style="background: #a8ebd1; padding: 15px; font-size: 1.2rem;" id="btnCompleteCashSale">Open Drawer & Complete</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="refundModal">
+        <div class="modal" style="text-align: center; width: 400px;">
+            <h2>Issue Refund</h2>
+            <p style="margin-bottom: 20px;">Select refund destination:</p>
+            <button class="btn" style="background: #a8ebd1; padding: 15px; margin-bottom: 10px;" id="btnRefundCash">Cash</button>
+            <button class="btn" style="background: #bae1ff; padding: 15px; margin-bottom: 10px;" id="btnRefundCredit">Store Credit / Gift Card</button>
+            <button class="btn" style="background: #ddd; padding: 15px;" onclick="document.getElementById('refundModal').style.display='none'">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="transactionsModal">
+        <div class="modal" style="width: 600px;">
+            <div class="modal-header">
+                <h2>Ledger History</h2>
+                <button class="btn" onclick="document.getElementById('transactionsModal').style.display='none'">X</button>
+            </div>
+            <div id="txnList" style="max-height: 350px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="txnDetailsModal">
+        <div class="modal" style="width: 450px;">
+            <div class="modal-header">
+                <h2>Transaction Details</h2>
+                <button class="btn" onclick="document.getElementById('txnDetailsModal').style.display='none'">X</button>
+            </div>
+            <div id="txnDetailsContent" style="text-align: left; margin-bottom: 15px; font-family: monospace; font-size: 14px; line-height: 1.5; background: var(--bg); border: 2px solid var(--border); padding: 15px;"></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" style="background: #a8ebd1; flex: 1;" id="btnReprintReceipt">Receipt</button>
+                <button class="btn" style="background: #ffffba; flex: 1; display: none;" id="btnReprintPrep">Prep Ticket</button>
+                <button class="btn" style="background: #ddd; flex: 1;" onclick="document.getElementById('txnDetailsModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="receiptPrintArea"></div>
+
+    <div class="modal-overlay" id="kioskSuccessModal">
+        <div class="modal" style="text-align: center; border-color: #4ade80; box-shadow: 12px 12px 0px #4ade80;">
+            <h1 style="font-size: 4rem; margin: 0 0 10px 0;">🎉</h1>
+            <h2>Order Printed!</h2>
+            <p style="font-size: 1.2rem;">Please take your ticket to the register to pay and complete your order.</p>
+        </div>
+    </div>
+
+    <button class="btn" id="exitKioskBtn" style="display: none; position: fixed; bottom: 10px; left: 10px; z-index: 1000; opacity: 0.1; font-size: 0.8rem;">Exit Kiosk</button>
+
+    <div class="modal-overlay" id="discoModal" style="z-index: 10000; transition: background-color 0.2s;">
+        <div class="modal" id="discoBox" style="text-align: center; border: 8px solid #000; border-radius: 50px; background: #1a1a1a; box-shadow: 20px 20px 0px #fff;">
+            <h2 class="groovy-text">Burn baby burn,<br>Disco Inferno!</h2>
+            
+            <div style="font-size: 8rem; animation: spin 3s linear infinite;">🪩</div>
+            
+            <div style="font-size: 4rem; display: flex; justify-content: center; gap: 30px; margin-top: 30px;">
+                <span style="animation: boogie 0.8s ease-in-out infinite alternate;">🕺</span>
+                <span style="animation: boogie 0.9s ease-in-out infinite alternate-reverse;">💃</span>
+                <span style="animation: boogie 0.85s ease-in-out infinite alternate;">🕺</span>
+            </div>
+
+            <button class="btn" onclick="stopDisco()" style="background: #fff; color: #000; margin-top: 40px; font-size: 1.5rem; border-radius: 20px;">Bummer (Close)</button>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

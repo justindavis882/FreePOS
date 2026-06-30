@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreePOS - Support & Setup</title>
+    <style>
+        :root {
+            --bg: #f4f4f0; --text: #1a1a1a; --border: #000;
+            --accent: #ff4747; --panel: #fff; --header-bg: #e5e5df;
+        }
+        body {
+            margin: 0; font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg); color: var(--text);
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        h1, h2, h3 { margin-top: 0; text-transform: uppercase; }
+        .logo {
+            font-family: 'Georgia', serif; font-weight: 900; color: var(--bg);
+            text-shadow: 2px 2px 0px var(--accent), 4px 4px 0px #ffb3ba, 6px 6px 0px var(--border);
+            letter-spacing: -2px; transform: rotate(-3deg); margin: 0; cursor: default;
+        }
+        .btn {
+            background: var(--panel); border: 3px solid var(--border);
+            box-shadow: 4px 4px 0px var(--border); font-family: inherit; font-weight: bold;
+            font-size: 1rem; cursor: pointer; transition: all 0.05s ease-in-out; text-transform: uppercase; padding: 10px 20px;
+        }
+        .btn:active { box-shadow: 0px 0px 0px var(--border); transform: translate(4px, 4px); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: 0px 0px 0px var(--border); transform: translate(4px, 4px); }
+        
+        .lp-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 4px solid var(--border); background: var(--panel); }
+        .auth-input { padding: 12px; font-family: inherit; font-size: 1rem; border: 2px solid var(--border); background: var(--bg); outline: none; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
+        
+        .container { display: flex; flex-wrap: wrap; gap: 40px; padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .column { flex: 1; min-width: 300px; }
+        .box { background: var(--panel); border: 4px solid var(--border); padding: 30px; box-shadow: 8px 8px 0px var(--accent); margin-bottom: 30px; }
+        
+        .step { display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; }
+        .step-num { background: #baffc9; border: 2px solid var(--border); font-size: 1.5rem; font-weight: bold; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; box-shadow: 2px 2px 0px var(--border); }
+    </style>
+</head>
+<body>
+
+    <div class="lp-nav">
+        <div class="logo" style="font-size: 2rem;">FreePOS</div>
+        <button class="btn" style="background: #e6e6fa;" onclick="window.location.href='./index.html'">Return to Terminal</button>
+    </div>
+
+    <div class="container">
+        <!-- Quick Setup Instructions -->
+        <div class="column">
+            <div class="box" style="box-shadow: 8px 8px 0px #bae1ff;">
+                <h2>Quick Setup Guide</h2>
+                <p style="margin-bottom: 30px; line-height: 1.5;">Get your terminal up and running in under 5 minutes. No hardware configuration required.</p>
+                
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 style="margin-bottom: 5px;">Create Your Account</h3>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">Sign up using your email or Google account from the main terminal page. You will instantly be placed on the 100% Free Core Tier.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num" style="background: #ffffba;">2</div>
+                    <div>
+                        <h3 style="margin-bottom: 5px;">Configure Settings</h3>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">Click the ⚙️ icon in the top right. Set your Store Name, customized Receipt Header, and your local Sales Tax Rate.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num" style="background: #ffdfba;">3</div>
+                    <div>
+                        <h3 style="margin-bottom: 5px;">Add Inventory</h3>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">Click the "Products" button. You can add up to 25 items for free. Assign colors to make them easy to find on the grid.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-num" style="background: #ffb3ba;">4</div>
+                    <div>
+                        <h3 style="margin-bottom: 5px;">Ring Up a Sale</h3>
+                        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">Tap items to add them to your ticket. Click "Charge" to calculate change or select a card payment, and automatically generate a digital/printable receipt.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Intake Form -->
+        <div class="column">
+            <div class="box">
+                <h2>Support Intake Form</h2>
+                <p style="margin-bottom: 20px; font-size: 0.9rem;">Need help with a physical order or finding a bug? Drop a ticket below and our team will check the ledger.</p>
+                
+                <div id="successMessage" style="display: none; background: #baffc9; border: 2px dashed #000; padding: 15px; margin-bottom: 20px; font-weight: bold; text-align: center;">
+                    Ticket submitted successfully! We'll be in touch soon.
+                </div>
+
+                <form id="supportForm">
+                    <input type="email" id="ticketEmail" class="auth-input" placeholder="Your Account Email" required>
+                    
+                    <select id="ticketType" class="auth-input" required>
+                        <option value="" disabled selected>Select Issue Type...</option>
+                        <option value="hardware_supplies">Physical Hardware / Supplies Order</option>
+                        <option value="billing">Billing / Subscription Issue</option>
+                        <option value="bug_report">Software Bug / Glitch</option>
+                        <option value="setup_help">Help Setting Up Terminal</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <textarea id="ticketDesc" class="auth-input" rows="6" placeholder="Describe your issue in detail..." style="resize: vertical;" required></textarea>
+                    
+                    <button type="submit" class="btn" style="background: #a8ebd1; width: 100%; font-size: 1.2rem;" id="btnSubmitTicket">Submit Ticket</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // !!! PASTE YOUR FIREBASE CONFIG HERE !!!
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0I8p3nM-oT_Qbzax2eialWeoMOIQt4OI",
+            authDomain: "freepos-69379.firebaseapp.com",
+            projectId: "freepos-69379",
+            storageBucket: "freepos-69379.firebasestorage.app",
+            messagingSenderId: "194928732424",
+            appId: "1:194928732424:web:630d30282fabe4d74aa4bd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('supportForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitTicket');
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            const email = document.getElementById('ticketEmail').value;
+            const type = document.getElementById('ticketType').value;
+            const description = document.getElementById('ticketDesc').value;
+
+            try {
+                // Writes to a global "support_tickets" collection
+                await addDoc(collection(db, 'support_tickets'), {
+                    email: email,
+                    type: type,
+                    description: description,
+                    status: 'open',
+                    timestamp: serverTimestamp()
+                });
+
+                document.getElementById('supportForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+            } catch (error) {
+                console.error("Error submitting ticket: ", error);
+                alert("Failed to submit ticket. Please check your connection and try again.");
+                btn.innerText = "Submit Ticket";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
