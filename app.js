@@ -16,7 +16,6 @@ import {
     collection, addDoc, doc, updateDoc, deleteDoc, getDocs, onSnapshot, getDoc, setDoc, query, orderBy, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-functions.js";
-const functions = getFunctions(app);
 
 const isCanvasEnv = typeof __firebase_config !== 'undefined';
 const firebaseConfig = {
@@ -31,12 +30,14 @@ const firebaseConfig = {
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'freepos';
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
 const db = initializeFirestore(app, {
   localCache: persistentLocalCache({
       tabManager: persistentMultipleTabManager()
   })
 });
+const functions = getFunctions(app);
 const googleProvider = new GoogleAuthProvider();
 
 // Replace with your Stripe Publishable Key
