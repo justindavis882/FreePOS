@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const CACHE_NAME = 'FreePOS-v1.3.1';
-=======
-const CACHE_NAME = 'FreePOS-v1.3.0';
->>>>>>> 000949ec3482d9ddb691198e0764f16a4de6b13f
 const urlsToCache = [
   './index.html',
   './disco.html',
@@ -10,17 +6,10 @@ const urlsToCache = [
   './sw.js',
   './app.js',
   './admin.html',
-<<<<<<< HEAD
   './setAdmin.js',
   './manifest.json',
   './support.html',
   './legal.html',
-=======
-  './legal.html',
-  './setAdmin.js',
-  './manifest.json',
-  './support.html',
->>>>>>> 000949ec3482d9ddb691198e0764f16a4de6b13f
   './assets/icon-512.png',
   './assets/icon-192.png',
   './assets/madeWithLovePride.png',
@@ -46,7 +35,6 @@ self.addEventListener('fetch', event => {
       .then(response => response || fetch(event.request))
   );
 });
-<<<<<<< HEAD
 
 // Clean up old caches when a new service worker takes over
 self.addEventListener('activate', event => {
@@ -63,5 +51,3 @@ self.addEventListener('activate', event => {
     })
   );
 });
-=======
->>>>>>> 000949ec3482d9ddb691198e0764f16a4de6b13f
