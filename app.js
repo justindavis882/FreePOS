@@ -299,6 +299,10 @@ onAuthStateChanged(auth, async (user) => {
         if (unsubProducts) unsubProducts();
         if (unsubStaff) unsubStaff();
     }
+});
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
 
     // Add this inside your onAuthStateChanged block (once we know who the user is)
     const urlParams = new URLSearchParams(window.location.search);
@@ -319,6 +323,7 @@ onAuthStateChanged(auth, async (user) => {
             alert("Error connecting Stripe: " + error.message);
         });
     }
+}
 });
 
 // --- ONBOARDING LOGIC ---

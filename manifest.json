@@ -1,6 +1,5 @@
 {
-  "name": "FreePOS-v1.3.1",
-  "name": "FreePOS-v1.3.0",
+  "name": "FreePOS-v1.3.2",
   "short_name": "FreePOS",
   "start_url": "./index.html",
   "display": "standalone",
