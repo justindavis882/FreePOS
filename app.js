@@ -252,14 +252,18 @@ onAuthStateChanged(auth, async (user) => {
         const stripeAuthCode = urlParams.get('code');
 
         if (stripeAuthCode) {
+            // 1. CLEAR THE URL IMMEDIATELY
+            // This ensures if the app freezes or the user refreshes, they don't get stuck in an error loop.
+            window.history.replaceState({}, document.title, window.location.pathname);
+            
+            // 2. Process the connection
             const finalizeStripe = httpsCallable(functions, 'finalizeStripeConnection');
             
-            // Do not use await here so we don't block the rest of the app from loading
             finalizeStripe({ code: stripeAuthCode }).then((result) => {
                 alert("Stripe Connected Successfully! You can now accept cards.");
                 storeConfig.stripe_account_id = result.data.accountId; 
-                window.history.replaceState({}, document.title, window.location.pathname);
             }).catch((error) => {
+                console.error(error);
                 alert("Error connecting Stripe: " + error.message);
             });
         }
