@@ -1047,7 +1047,10 @@ document.getElementById('btnCompleteCashSale').onclick = () => {
     finalizeSale('Cash', null, finalTendered, change);
 };
 
-document.getElementById('btnPayCard').onclick = () => finalizeSale('Card');
+const btnPayCard = document.getElementById('btnPayCard');
+if (btnPayCard) {
+    btnPayCard.onclick = () => finalizeSale('Card');
+}
 
 document.getElementById('btnPayGiftCard').onclick = async () => {
     const uid = prompt("Scan or enter Gift Card UID:");
