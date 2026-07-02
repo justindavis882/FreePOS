@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreePOS Promo Cards</title>
+    <style>
+        /* =========================================
+           CORE FREEPOS STYLES (IMPORTED)
+        ========================================= */
+        :root {
+            --bg: #f4f4f0;
+            --text: #1a1a1a;
+            --border: #000;
+            --accent: #ff4747;
+            --panel: #fff;
+            --header-bg: #e5e5df;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 20px;
+        }
+
+        h2, h3 {
+            margin-top: 0;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            font-family: 'Georgia', serif;
+            font-weight: 900;
+            color: var(--bg);
+            text-shadow: 2px 2px 0px var(--accent), 4px 4px 0px #ffb3ba, 6px 6px 0px var(--border);
+            letter-spacing: -2px;
+            transform: rotate(-3deg);
+            margin: 0 0 15px 0;
+            cursor: default;
+            font-size: 2.5rem;
+        }
+
+        .lp-badge {
+            display: inline-block;
+            background: #baffc9;
+            padding: 5px 10px;
+            border: 2px solid var(--border);
+            font-weight: bold;
+            margin-bottom: 15px;
+            box-shadow: 2px 2px 0px var(--border);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* =========================================
+           CUSTOM PRINTABLE CARD GRID
+        ========================================= */
+        .card-sheet {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 8.5in; /* Standard US Letter width */
+            margin: 0 auto;
+        }
+
+        .promo-card {
+            background: var(--panel);
+            border: 4px solid var(--border);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 8px 8px 0px var(--border);
+            aspect-ratio: 1.75; /* Standard business card ratio */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-card .tagline {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .promo-card .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .promo-card .feature-list li {
+            margin-bottom: 5px;
+        }
+
+        .promo-card .feature-list li::before {
+            content: "■ ";
+            color: var(--accent);
+        }
+
+        .developer-credit {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #666;
+        }
+
+        /* Print-specific overrides */
+        @media print {
+            body {
+                background: #fff;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .card-sheet {
+                gap: 0.5in;
+                max-width: 100%;
+            }
+            .promo-card {
+                box-shadow: 4px 4px 0px var(--border); /* Slightly smaller shadow for print */
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-sheet">
+        <!-- Card 1: Main Pitch -->
+        <div class="promo-card">
+            <h1 class="logo">FreePOS</h1>
+            <div class="lp-badge">Ditch the Fees</div>
+            <div class="tagline">The high-contrast, low-cost Point of Sale system built for small businesses.</div>
+            <div class="developer-credit">A Digital Native Project by Olly</div>
+        </div>
+
+        <!-- Card 2: Feature Breakdown -->
+        <div class="promo-card">
+            <h1 class="logo" style="font-size: 1.8rem;">FreePOS</h1>
+            <ul class="feature-list">
+                <li>100% Free Core Features</li>
+                <li>No Hardware Lock-in</li>
+                <li>Lightning Fast Cloud Sync</li>
+                <li>Retro & Disco UI Themes</li>
+            </ul>
+        </div>
+
+        <!-- Card 3: Call to Action -->
+        <div class="promo-card">
+            <h1 class="logo">FreePOS</h1>
+            <div class="lp-badge" style="background: #ffb3ba;">Get Started Today</div>
+            <div class="tagline">Modern features.<br>Retro vibes.<br>Zero monthly fees.</div>
+            <div class="developer-credit">Scan or visit our site to setup in 5 mins.</div>
+        </div>
+
+        <!-- Card 4: Hardware Freedom -->
+        <div class="promo-card">
+            <h1 class="logo" style="font-size: 1.8rem;">FreePOS</h1>
+            <div class="lp-badge" style="background: #ffff00;">Hardware Freedom</div>
+            <div class="tagline">Use your existing tablets, phones, or PCs. No expensive proprietary terminals required.</div>
+            <div class="developer-credit">A Digital Native Project by Olly</div>
+        </div>
+    </div>
+
+</body>
+</html>
