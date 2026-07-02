@@ -247,6 +247,24 @@ onAuthStateChanged(auth, async (user) => {
         document.getElementById('authScreen').style.display = 'none';
         document.getElementById('appContainer').style.display = 'flex';
 
+        // --- STRIPE REDIRECT LOGIC ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const stripeAuthCode = urlParams.get('code');
+
+        if (stripeAuthCode) {
+            const finalizeStripe = httpsCallable(functions, 'finalizeStripeConnection');
+            
+            // Do not use await here so we don't block the rest of the app from loading
+            finalizeStripe({ code: stripeAuthCode }).then((result) => {
+                alert("Stripe Connected Successfully! You can now accept cards.");
+                storeConfig.stripe_account_id = result.data.accountId; 
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }).catch((error) => {
+                alert("Error connecting Stripe: " + error.message);
+            });
+        }
+        // -----------------------------
+        
         const cfgRef = doc(db, getDocPath(user.uid, 'config', 'settings'));
         const cfgSnap = await getDoc(cfgRef);
         if (cfgSnap.exists()) storeConfig = { ...storeConfig, ...cfgSnap.data() };
@@ -299,31 +317,6 @@ onAuthStateChanged(auth, async (user) => {
         if (unsubProducts) unsubProducts();
         if (unsubStaff) unsubStaff();
     }
-});
-
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-
-    // Add this inside your onAuthStateChanged block (once we know who the user is)
-    const urlParams = new URLSearchParams(window.location.search);
-    const stripeAuthCode = urlParams.get('code');
-
-    if (stripeAuthCode) {
-        const finalizeStripe = httpsCallable(functions, 'finalizeStripeConnection');
-        
-        finalizeStripe({ code: stripeAuthCode }).then((result) => {
-            alert("Stripe Connected Successfully! You can now accept cards.");
-            
-            // Update local state so they don't have to refresh
-            storeConfig.stripe_account_id = result.data.accountId; 
-            
-            // Clean the URL so they don't accidentally re-submit the code
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }).catch((error) => {
-            alert("Error connecting Stripe: " + error.message);
-        });
-    }
-}
 });
 
 // --- ONBOARDING LOGIC ---
